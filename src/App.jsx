@@ -1,8 +1,12 @@
+import NavBar from "./NavBar";
 
 function App() {
   return (
-    <h1>Tech Buddies Frontend</h1>
-  )
+    <>
+      <NavBar />      
+      <h1>Tech Buddies Frontend</h1>
+    </>
+  );
 }
 
 export default App
