@@ -1,10 +1,19 @@
-import NavBar from "./NavBar";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Body from "./Body";
+import Login from "./Login";
+import Profile from "./Profile";
 
 function App() {
   return (
     <>
-      <NavBar />      
-      <h1>Tech Buddies Frontend</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Body />} >
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>    
+      </BrowserRouter>
     </>
   );
 }
