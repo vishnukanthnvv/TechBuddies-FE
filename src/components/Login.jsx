@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 
 const Login = () => {
     const [emailId, updateEmailId] = useState("");
     const [password, updatePassword] = useState("");
 
+    const dispatch = useDispatch();
     const handleLogin = async () => {
       try {
         const res = await axios.post(
@@ -18,7 +21,8 @@ const Login = () => {
             withCredentials: true,
           },
         );
-        console.log(res);
+        console.log(res.data);
+        dispatch(addUser(res.data));
       } catch (err) {
         console.log(err.nessage);
       }
@@ -54,7 +58,7 @@ const Login = () => {
                 </div>
                 <div className="justify-end card-actions"></div>
             </div>
-            <div className="password" my-2>
+            <div className="password my-2">
                 <label className="input validator">
                 <svg
                     className="h-[1em] opacity-50"
