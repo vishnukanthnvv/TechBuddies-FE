@@ -25,8 +25,8 @@ const Login = () => {
             withCredentials: true,
           },
         );
-        console.log(res.data);
-        dispatch(addUser(res.data));
+
+        dispatch(addUser(res.data.data));
         navigate("/feed");
       } catch (err) {
         console.log(err.nessage);
