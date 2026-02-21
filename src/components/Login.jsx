@@ -2,17 +2,21 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
+import { BASE_URL } from "../utils/constants,js";
 
 
 const Login = () => {
-    const [emailId, updateEmailId] = useState("");
-    const [password, updatePassword] = useState("");
+    const [emailId, setEmailId] = useState("");
+    const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleLogin = async () => {
       try {
         const res = await axios.post(
-          "http://localhost:3000/login",
+          BASE_URL + "login",
           {
             emailId,
             password,
@@ -23,6 +27,7 @@ const Login = () => {
         );
         console.log(res.data);
         dispatch(addUser(res.data));
+        navigate("/feed");
       } catch (err) {
         console.log(err.nessage);
       }
@@ -51,7 +56,7 @@ const Login = () => {
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
                     </g>
                 </svg>
-                <input type="email" value={emailId} onChange={(e) => updateEmailId(e.target.value)} placeholder="mail@site.com" required />
+                <input type="email" value={emailId} onChange={(e) => setEmailId(e.target.value)} placeholder="mail@site.com" required />
                 </label>
                 <div className="validator-hint hidden">
                 Enter valid email address
@@ -84,7 +89,7 @@ const Login = () => {
                 <input
                     type="password"
                     value={password}
-                    onChange={(e) => updatePassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="Password"
                     minLength="8"
