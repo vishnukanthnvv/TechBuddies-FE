@@ -34,7 +34,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className='relative h-220'>
         <NavBar />
         <Outlet />
         <Footer />
