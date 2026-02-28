@@ -16,12 +16,13 @@ const EditProfile = ({ user }) => {
     const [about, setAbout] = useState(user.about);
     const [showToast, setShowToast] = useState(false);
     const [toastMsg, setToastMsg] = useState("");
-    
     const dispatch = useDispatch();
+    
     const saveProfile = async () => {
+        setError("");
         try {
             const res = await axios.patch(
-                BASE_URL + "profile/edit", 
+                BASE_URL + "/profile/edit", 
                 {
                     firstName,
                     lastName,
@@ -30,7 +31,9 @@ const EditProfile = ({ user }) => {
                     gender,
                     about
                 },
-                { withCredentials: true, }
+                {
+                    withCredentials: true,
+                },
             );
 
             dispatch(addUser(res?.data?.data));
@@ -41,7 +44,7 @@ const EditProfile = ({ user }) => {
             }, 3000);
 
         } catch(err){
-            setError(err.response.data);
+            setError(err?.response?.data);
             console.log(error);
         }
     }
@@ -63,11 +66,14 @@ const EditProfile = ({ user }) => {
             <input type="text" className="input" value={age} onChange={e => { setAge(e.target.value)}} />
 
             <label className="label">Gender</label>
-            <input type="text" className="input" value={gender} onChange={e => { setGender(e.target.value)}} />
-
+            <select className="select select-md" value={gender} onSelect={e => setGender(e.target.value)}>
+                <option>male</option>
+                <option>female</option>
+                <option>others</option>
+            </select>
             <label className="label">About</label>
             <textarea className="textarea h-24" value={about} onChange={e => { setAbout(e.target.value)}}></textarea>
-            
+            <p className="text-red-500">{error}</p>
             <button className="btn btn-primary my-3" onClick={saveProfile}>Save Profile</button>
         </fieldset>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 ml-10">
