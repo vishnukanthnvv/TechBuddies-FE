@@ -36,7 +36,7 @@ const Connections = () => {
                     const {_id, firstName, lastName, photoUrl, age, gender, about } = connection;
                     return (
 
-                        <div key={_id} className='flex items-center m-4 p-4 bg-base-300 w-1/2 mx-auto'>
+                        <div key={_id} className='flex items-center m-4 p-4 bg-base-300 w-1/3 mx-auto'>
                             <img
                                 alt='user Photo'
                                 className='w-20 h-20 rounded-full' 
