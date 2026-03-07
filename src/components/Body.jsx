@@ -34,7 +34,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div className='relative h-220'>
+    <div className='min-h-220 flex flex-col'>
         <NavBar />
         <Outlet />
         <Footer />

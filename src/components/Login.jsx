@@ -2,13 +2,19 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { BASE_URL } from "../utils/constants,js";
 
 
 const Login = () => {
     const [emailId, setEmailId] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [age, setAge] = useState("");
+    const [gender, setGender] = useState("");
+    const [about, setAbout] = useState("");
+    const [isLoginForm, setIsLoginForm] = useState(false);
     const [error, setError] = useState("");
 
     const dispatch = useDispatch();
@@ -35,12 +41,65 @@ const Login = () => {
       }
     };
 
+    const handleSignup = async () => {
+        try{
+            const newUser = await axios.post(BASE_URL + "/signup", {
+                firstName,
+                lastName,
+                age,
+                gender,
+                emailId,
+                password,
+                about
+            }, { withCredentials: true });
+
+            dispatch(addUser(newUser?.data?.data));
+            return navigate("/profile");
+        } catch(err) {
+            setError(err?.response?.data);
+        }
+    }
+
     return (
-        <div className="flex justify-center my-10">
+        <div className="flex justify-center my-5">
         <div className="card w-96 bg-base-300 card-xl shadow-sm">
             <div className="card-body flex justify-center">
-            <h2 className="card-title justify-center">Login</h2>
-            <div className="email my-2">
+            <h2 className="card-title justify-center">{isLoginForm ? "Login" : "Signup"}</h2>
+            {!isLoginForm && (
+                <>
+                    <div className="first-name my-2">
+                        <label className="label text-sm mb-2">First Name</label>
+                        <input type="text" className="input" value={firstName} placeholder="Enter First Name" onChange={e => { setFirstName(e.target.value)}} required/>                        <div className="justify-end card-actions"></div>
+                    </div>
+                    <div className="last-name mb-2">
+                    <label className="label text-sm mb-2">Last Name</label>
+                    <input type="text" className="input" value={lastName} placeholder="Enter Last Name" onChange={e => { setLastName(e.target.value)}} required/>
+                        <div className="justify-end card-actions"></div>
+                    </div>
+                    <div className="age mb-2">
+                    <label className="label text-sm mb-2">Age</label>
+                        <input type="text" className="input" value={age} placeholder="Enter Age" onChange={e => { setAge(e.target.value)}} />
+                        <div className="justify-end card-actions"></div>
+                    </div>
+                    <div className="gender mb-2">
+                    <label className="label text-sm mb-2">Gender</label>
+                        <select className="select select-md" value={gender} onChange={e => { setGender(e.target.value) }}>
+                            <option></option>
+                            <option>male</option>
+                            <option>female</option>
+                            <option>others</option>
+                        </select>   
+                    </div>
+                    <div className="about mb-2">
+                        <label className="label text-sm mb-2">About</label>
+                        <textarea className="textarea h-24" value={about} placeholder="Breif description about yourself" onChange={e => { setAbout(e.target.value)}}></textarea>
+                        <div className="justify-end card-actions"></div>
+                    </div>
+                    <p className="text-red-500">{error}</p>
+                </>
+            )}
+            <div className="email mb-2">
+                <label className="label text-sm mb-2">Email</label>
                 <label className="input validator">
                 <svg
                     className="h-[1em] opacity-50"
@@ -65,7 +124,8 @@ const Login = () => {
                 </div>
                 <div className="justify-end card-actions"></div>
             </div>
-            <div className="password my-2">
+            <div className="password mb-2">
+                <label className="label text-sm mb-2">Password</label>
                 <label className="input validator">
                 <svg
                     className="h-[1em] opacity-50"
@@ -107,7 +167,9 @@ const Login = () => {
                 </p>
             {error && <div className="error text-red-600 pt-3">{error}</div>}
             </div>
-            <button className="btn btn-primary my-3" onClick={handleLogin}>Login</button>
+            <button className="btn btn-primary my-3" onClick={() => isLoginForm ? handleLogin() : handleSignup()}>{isLoginForm ? "Login" : "Signup"}</button>
+            <div className="label justify-center">
+                <Link onClick={() => setIsLoginForm(value => !value)}>{isLoginForm ? "New User? Signup Here" : "Already have account? Login Here"}</Link></div>
             </div>
         </div>
         </div>
