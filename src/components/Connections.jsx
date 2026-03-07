@@ -12,7 +12,6 @@ const Connections = () => {
     const getConnections = async () => {
         try {
             const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true });
-            console.log(res?.data?.data);
             dispatch(addConnection(res?.data?.data));
         } catch(err){
             console.log(err.message);
@@ -23,7 +22,6 @@ const Connections = () => {
         getConnections();
     }, []);
     
-    console.log(connections);
     if(!connections) return;
 
     if(connections.length === 0) return <h1>No connections found</h1>
