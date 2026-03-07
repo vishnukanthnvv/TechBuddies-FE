@@ -23,7 +23,7 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-200 shadow-sm">
         <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-xl">👨🏿‍🤝‍👨🏿TechBuddies</Link>
+          <Link to="/feed" className="btn btn-ghost text-xl">👨🏿‍🤝‍👨🏿TechBuddies</Link>
         </div>
         <div className="flex gap-2">
           { 
@@ -48,9 +48,13 @@ const NavBar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-2 mt-3 w-52 p-2 shadow"
                 >
                 <li>
+                  <Link to="/feed" className="justify-between">
+                    Home
+                  </Link>
+                </li>
+                <li>
                   <Link to="/profile" className="justify-between">
                     Profile
-                    <span className="badge">New</span>
                   </Link>
                 </li>
                 <li>
@@ -62,9 +66,6 @@ const NavBar = () => {
                   <Link to="/requests" className="justify-between">
                     Requests
                   </Link>
-                </li>
-                <li>
-                  <a>Settings</a>
                 </li>
                 <li>
                   <a onClick={handleLogout}>Logout</a>

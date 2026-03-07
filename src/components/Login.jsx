@@ -14,7 +14,7 @@ const Login = () => {
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("");
     const [about, setAbout] = useState("");
-    const [isLoginForm, setIsLoginForm] = useState(false);
+    const [isLoginForm, setIsLoginForm] = useState(true);
     const [error, setError] = useState("");
 
     const dispatch = useDispatch();
