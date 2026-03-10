@@ -65,7 +65,8 @@ const EditProfile = ({ user }) => {
             <input type="text" className="input" value={age} onChange={e => { setAge(e.target.value)}} />
 
             <label className="label">Gender</label>
-            <select className="select select-md" value={gender} onSelect={e => setGender(e.target.value)}>
+            <select className="select select-md" value={gender} onChange={e => setGender(e.target.value)}>
+                <option></option>
                 <option>male</option>
                 <option>female</option>
                 <option>others</option>
